@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f6c8d8">
+  <meta name="description" content="Tu pequeño planner digital: calendario, horario y tareas.">
+  <title>Peachy Planner ♡</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="Peachy Planner, inicio">
+        <span class="brand-icon">✿</span>
+        <span>PEACHY PLANNER</span>
+      </a>
+      <div class="topbar-right">
+        <span class="pixel-status"><i></i> YOUR LITTLE SPACE</span>
+        <button class="icon-button" id="todayBtn" title="Ir a hoy" aria-label="Ir a hoy">⌂</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="welcome">
+        <div>
+          <p class="eyebrow">YOUR PERSONAL DESKTOP</p>
+          <h1>Make today <span>a little magic</span> ✦</h1>
+          <p class="welcome-sub">Organiza tus días a tu ritmo, una tarea cada vez.</p>
+        </div>
+        <div class="welcome-sprite" aria-hidden="true">
+          <span class="spark s1">✦</span><span class="spark s2">✿</span>
+          <div class="sprite-face"><span>•</span><span>•</span><b>ᴗ</b></div>
+          <span class="sprite-caption">YOU CAN DO IT!</span>
+        </div>
+      </section>
+
+      <div class="dashboard">
+        <section class="panel calendar-panel">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">YOUR OVERVIEW</p>
+              <h2>Calendar <span class="tiny-flower">✿</span></h2>
+            </div>
+            <div class="month-controls">
+              <button class="mini-button" id="prevMonth" aria-label="Mes anterior">‹</button>
+              <strong id="monthLabel"></strong>
+              <button class="mini-button" id="nextMonth" aria-label="Mes siguiente">›</button>
+            </div>
+          </div>
+          <div class="calendar-grid weekday-row">
+            <span>L</span><span>M</span><span>X</span><span>J</span><span>V</span><span>S</span><span>D</span>
+          </div>
+          <div class="calendar-grid" id="calendarDays"></div>
+          <div class="calendar-legend"><span><i class="legend-dot pink"></i> Has plans</span><span><i class="legend-dot lilac"></i> Selected day</span></div>
+        </section>
+
+        <section class="panel day-panel">
+          <div class="panel-heading day-heading">
+            <div>
+              <p class="eyebrow">YOUR DAILY PLAN</p>
+              <h2 id="selectedDateTitle">Today</h2>
+              <p class="day-subtitle" id="daySubtitle">A fresh page waiting for you.</p>
+            </div>
+            <button class="add-button" id="openTaskModal"><span>＋</span> Add task</button>
+          </div>
+          <div class="day-summary">
+            <div class="summary-item"><strong id="taskCount">0</strong><span>tasks</span></div>
+            <div class="progress-track"><div id="progressBar"></div></div>
+            <span id="progressLabel">0% done</span>
+          </div>
+          <div class="agenda" id="agenda"></div>
+        </section>
+
+        <section class="panel routine-panel">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">LITTLE HABITS</p>
+              <h2>Daily routines <span class="tiny-flower">♡</span></h2>
+            </div>
+            <button class="mini-button plus-mini" id="addRoutineBtn" aria-label="Añadir rutina">＋</button>
+          </div>
+          <p class="section-note">Pequeñas cosas que se repiten y te ayudan a cuidar de tu día.</p>
+          <div id="routineList" class="routine-list"></div>
+          <form id="routineForm" class="inline-form hidden">
+            <input id="routineInput" type="text" maxlength="70" placeholder="Ej. Regar las plantas…" required>
+            <button type="submit" aria-label="Guardar rutina">♡</button>
+          </form>
+        </section>
+
+        <section class="panel quick-panel">
+          <p class="eyebrow">A LITTLE REMINDER</p>
+          <div class="quote-card">
+            <span class="quote-star">✧</span>
+            <p>“You don't have to do everything today. Just the next little thing.”</p>
+            <small>— YOUR PEACHY PLANNER</small>
+          </div>
+          <div class="quick-footer"><span>✿</span> Made for your everyday magic <span>✿</span></div>
+        </section>
+      </div>
+    </main>
+    <footer>PEACHY PLANNER <span>♡</span> YOUR PLANS ARE SAVED ON THIS DEVICE</footer>
+  </div>
+
+  <nav class="mobile-nav" aria-label="Navegación rápida">
+    <button data-scroll="calendar-panel" class="active"><span>▦</span>Calendar</button>
+    <button data-scroll="day-panel"><span>☷</span>My day</button>
+    <button data-scroll="routine-panel"><span>♡</span>Routines</button>
+  </nav>
+
+  <dialog id="taskDialog" class="task-dialog">
+    <form id="taskForm" method="dialog">
+      <div class="modal-top">
+        <div><p class="eyebrow">A NEW LITTLE PLAN</p><h2 id="modalTitle">Add a task ✦</h2></div>
+        <button type="button" class="close-button" id="closeTaskModal" aria-label="Cerrar">×</button>
+      </div>
+      <label class="field-label" for="taskName">What do you need to do?</label>
+      <input id="taskName" type="text" maxlength="100" placeholder="Write your task…" required>
+      <label class="field-label" for="taskDate">Day</label>
+      <input id="taskDate" type="date" required>
+      <div class="field-row">
+        <label class="check-line"><input type="checkbox" id="allDay"> All day</label>
+        <div id="timeFields" class="time-fields">
+          <label class="field-label" for="taskTime">Time</label>
+          <input id="taskTime" type="time" value="09:00">
+        </div>
+      </div>
+      <label class="field-label" for="taskCategory">Colour</label>
+      <select id="taskCategory">
+        <option value="pink">Peach pink</option>
+        <option value="lilac">Lilac</option>
+        <option value="blue">Baby blue</option>
+        <option value="green">Sage green</option>
+      </select>
+      <div class="modal-actions">
+        <button type="button" class="cancel-button" id="cancelTask">Cancel</button>
+        <button type="submit" class="add-button">Save task ♡</button>
+      </div>
+    </form>
+  </dialog>
+  <script src="app.js"></script>
+</body>
+</html>
